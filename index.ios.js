@@ -5,28 +5,27 @@
  */
 
 import React, { Component } from 'react';
+import Welcome from './App/components/welcome';
 import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  Navigator
 } from 'react-native';
 
 class dohu extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
+          <Navigator
+            initialRoute={{name: 'Welcome', component: Welcome}}
+            configureScene={(route, routeStack) => Navigator.SceneConfigs.HorizontalSwipeJump }
+            renderScene={(route, navigator) => {
+              if(route.component){
+                return <route.component navigator={navigator} {...route.passProps} />;
+              }
+            }}
+          />
     );
   }
 }
