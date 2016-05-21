@@ -27,8 +27,13 @@ class Quiz extends Component {
   }
 
   checkAnswer(answer){
-    console.log("ans", answer); 
-    this.setState({ qCounter: ++this.state.qCounter});
+    if( this.props.data.length > this.state.qCounter+1){
+      var score = this.state.score;
+      if(this.props.data[this.state.qCounter].correct == answer.id){
+        score++;
+      }
+      this.setState({ qCounter: ++this.state.qCounter, score: score});
+    }
   }
 
   renderBtn(index){    

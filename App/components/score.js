@@ -19,7 +19,6 @@ var H = Dimensions.get('window').height; //full height
 class Score extends Component {
   
   render() {
-    console.log(this.props.score);
     return (
          <View style={styles.container}>
             <Text style={styles.label}>{this.props.score}</Text>
