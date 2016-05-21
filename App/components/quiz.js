@@ -28,6 +28,7 @@ class Quiz extends Component {
 
   checkAnswer(answer){
     console.log("ans", answer); 
+    this.setState({ qCounter: ++this.state.qCounter});
   }
 
   renderBtn(index){    
@@ -77,9 +78,9 @@ class Quiz extends Component {
     var answers = this.renderAnswers();
     return (
          <View style={styles.container}>
-            <Score score={this.state.score}/>
             <Image style={styles.image} source={{uri: img}} />
             {answers}
+            <Score score={this.state.score}/>
          </View>
     );
   }

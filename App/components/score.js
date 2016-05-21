@@ -10,10 +10,12 @@ import {
   Text,
   View,
   Image,
+  Dimensions,
   TouchableHighlight
 } from 'react-native';
 
-
+var W = Dimensions.get('window').width; //full width
+var H = Dimensions.get('window').height; //full height
 class Score extends Component {
   
   render() {
@@ -28,13 +30,18 @@ class Score extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#ff89b3',
+    backgroundColor: '#FFDB94',
     height: 44,
+    width: W,
+    position: 'absolute',
+    opacity: 0.6,
+    top:0,    
+    left:0
   },
   label: {
     fontSize: 22,
     textAlign: 'center',
-    color: '#000',
+    color: '#fff',
     paddingTop:15
   }
 });
