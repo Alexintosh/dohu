@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     textAlign: 'center',
     color: '#fff',
-    padding: 10
+    padding: 10,
   },
   image: {
     height: 400
