@@ -5,7 +5,9 @@
  */
 
 import React, { Component } from 'react';
+import _ from 'lodash';
 import Score from './score'
+import EndMatch from './end-match.js';
 import {
   StyleSheet,
   Text,
@@ -22,17 +24,41 @@ class Quiz extends Component {
     console.log(props);
     this.state = {
       score: 0,
-      qCounter: 0
+      qCounter: 0,
+      incorrectAnswers: []
     };
   }
 
   checkAnswer(answer){
     if( this.props.data.length > this.state.qCounter+1){
       var score = this.state.score;
-      if(this.props.data[this.state.qCounter].correct == answer.id){
+      var incorrectAnswers = this.state.incorrectAnswers;
+      let correctAns = this.props.data[this.state.qCounter].correct;
+
+      if(correctAns == answer.id){
         score++;
+      } else {
+        incorrectAnswers.push({
+          selected: answer.answer,
+          correct: _.find(this.props.data[this.state.qCounter].answers, (n) => {
+            return n.id == correctAns;
+          }).answer
+        });
+
+        console.log(_.last(incorrectAnswers));
       }
-      this.setState({ qCounter: ++this.state.qCounter, score: score});
+      this.setState({ qCounter: ++this.state.qCounter, score: score, incorrectAnswers: incorrectAnswers});
+    } else {
+      this.props.navigator.push({
+          component: EndMatch,
+          name: 'End Match',
+          passProps: {
+              score: this.state.score,
+              questionsCount: this.props.questionsCount,
+              player: this.props.player,
+              incorrectAnswers: this.state.incorrectAnswers
+          }
+      });
     }
   }
 
@@ -80,6 +106,8 @@ class Quiz extends Component {
   
   render() {
     var img = this.props.images_uri + this.props.data[this.state.qCounter].image;
+    console.log(img);
+    //var _img = './images/easy/'+ this.props.data[this.state.qCounter].image;
     var answers = this.renderAnswers();
     return (
          <View style={styles.container}>

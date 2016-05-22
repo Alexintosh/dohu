@@ -6,6 +6,8 @@
 
 import React, { Component } from 'react';
 import Quiz from './quiz';
+import StopWatch from './stopwatch';
+import ExploadingHearts from './heart';
 import api from '../utils/api';
 import {
   AppRegistry,
@@ -13,12 +15,14 @@ import {
   Text,
   TouchableHighlight,
   View,
+  Animated
 } from 'react-native';
 
 
 class Welcome extends Component {
   constructor(props){
     super(props);
+    this._animatedValue = new Animated.Value(0);
   }
 
   start() {    
@@ -38,15 +42,39 @@ class Welcome extends Component {
     });
   }
 
+  componentDidMount() {
+    Animated.timing(this._animatedValue, {
+        toValue: 100,
+        duration: 500
+    }).start();
+  }
+
+  stopWatch() {    
+      this.props.navigator.push({
+          component: Spotify,
+          name: 'StopWatch'
+      });
+  }
+
   render() {
+    var interpolatedColorAnimation = this._animatedValue.interpolate({
+        inputRange: [0, 100],
+      outputRange: ['rgba(255,255,255, 1)', 'rgba(51,156,177, 1)']
+    });
     return (
-         <View style={styles.container}>
+          <Animated.View style={[styles.container, {backgroundColor: interpolatedColorAnimation}]}>
+            <Text style={styles.welcome}>dohu</Text>
           <TouchableHighlight
             style={styles.button}
             onPress={this.start.bind(this)}>
-            <Text style={styles.label}>Hello</Text>
+            <Text style={styles.label}>Quiz</Text>
           </TouchableHighlight>
-         </View>
+          <TouchableHighlight
+            style={styles.button}
+            onPress={this.stopWatch.bind(this)}>
+            <Text style={styles.label}>Stopwatch</Text>
+          </TouchableHighlight>
+          </Animated.View>
     );
   }
 }
