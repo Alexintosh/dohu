@@ -15,7 +15,8 @@ import {
   Text,
   TouchableHighlight,
   View,
-  Animated
+  Animated,
+  Easing
 } from 'react-native';
 
 
@@ -23,6 +24,7 @@ class Welcome extends Component {
   constructor(props){
     super(props);
     this._animatedValue = new Animated.Value(0);
+    this._textAnimatedValue = new Animated.Value(0);
   }
 
   start() {    
@@ -43,10 +45,24 @@ class Welcome extends Component {
   }
 
   componentDidMount() {
-    Animated.timing(this._animatedValue, {
+    Animated.sequence([            // spring to start and twirl after decay finishes
+      Animated.timing(this._animatedValue, {
+        toValue: 200,
+        duration: 1000
+      }),
+      Animated.timing(this._animatedValue, {
         toValue: 100,
-        duration: 500
-    }).start();
+        duration: 2000
+      })
+    ]).start(); 
+
+    Animated.sequence([            // spring to start and twirl after decay finishes    
+      Animated.timing(this._textAnimatedValue, {
+          toValue: 145,
+          duration: 500,
+          easing: Easing.bounce
+      })
+    ]).start();
   }
 
   stopWatch() {    
@@ -58,21 +74,16 @@ class Welcome extends Component {
 
   render() {
     var interpolatedColorAnimation = this._animatedValue.interpolate({
-        inputRange: [0, 100],
+      inputRange: [0, 100],
       outputRange: ['rgba(255,255,255, 1)', 'rgba(51,156,177, 1)']
     });
     return (
           <Animated.View style={[styles.container, {backgroundColor: interpolatedColorAnimation}]}>
-            <Text style={styles.welcome}>dohu</Text>
+            <Animated.Text style={[styles.welcome, {fontSize: this._textAnimatedValue}]}>dohu</Animated.Text>
           <TouchableHighlight
             style={styles.button}
             onPress={this.start.bind(this)}>
             <Text style={styles.label}>Quiz</Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            style={styles.button}
-            onPress={this.stopWatch.bind(this)}>
-            <Text style={styles.label}>Stopwatch</Text>
           </TouchableHighlight>
           </Animated.View>
     );
@@ -87,16 +98,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   button: {
-    backgroundColor:'red'
+    backgroundColor:'#FFB037'
   },
   label: {
     fontSize: 22,
+    fontWeight: 'bold',
     color: '#fff',
     padding: 10
   },
   welcome: {
-    fontSize: 20,
+    fontFamily: "Signale",
+    color: '#fff',
+    fontSize: 40,
     textAlign: 'center',
+    fontWeight: 'bold',
     margin: 10,
   },
   instructions: {
