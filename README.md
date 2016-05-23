@@ -1,7 +1,7 @@
 # dohu
 React Native English Trainer App
 
-![](https://thumbs.gfycat.com/BetterFarHornedviper-size_restricted.gif)
+![](https://thumbs.gfycat.com/MediocreEmptyCrownofthornsstarfish-size_restricted.gif)
 
 # Getting started
 
