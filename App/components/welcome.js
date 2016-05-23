@@ -15,8 +15,7 @@ import {
   Text,
   TouchableHighlight,
   View,
-  Animated,
-  Easing
+  Animated
 } from 'react-native';
 
 
@@ -24,7 +23,6 @@ class Welcome extends Component {
   constructor(props){
     super(props);
     this._animatedValue = new Animated.Value(0);
-    this._textAnimatedValue = new Animated.Value(0);
   }
 
   start() {    
@@ -45,24 +43,10 @@ class Welcome extends Component {
   }
 
   componentDidMount() {
-    Animated.sequence([            // spring to start and twirl after decay finishes
-      Animated.timing(this._animatedValue, {
-        toValue: 200,
-        duration: 1000
-      }),
-      Animated.timing(this._animatedValue, {
+    Animated.timing(this._animatedValue, {
         toValue: 100,
-        duration: 2000
-      })
-    ]).start(); 
-
-    Animated.sequence([            // spring to start and twirl after decay finishes    
-      Animated.timing(this._textAnimatedValue, {
-          toValue: 145,
-          duration: 500,
-          easing: Easing.bounce
-      })
-    ]).start();
+        duration: 500
+    }).start();
   }
 
   stopWatch() {    
@@ -74,12 +58,12 @@ class Welcome extends Component {
 
   render() {
     var interpolatedColorAnimation = this._animatedValue.interpolate({
-      inputRange: [0, 100],
+        inputRange: [0, 100],
       outputRange: ['rgba(255,255,255, 1)', 'rgba(51,156,177, 1)']
     });
     return (
           <Animated.View style={[styles.container, {backgroundColor: interpolatedColorAnimation}]}>
-            <Animated.Text style={[styles.welcome, {fontSize: this._textAnimatedValue}]}>dohu</Animated.Text>
+            <Text style={styles.welcome}>dohu</Text>
           <TouchableHighlight
             style={styles.button}
             onPress={this.start.bind(this)}>
@@ -111,11 +95,8 @@ const styles = StyleSheet.create({
     padding: 10
   },
   welcome: {
-    fontFamily: "Signale",
-    color: '#fff',
-    fontSize: 40,
+    fontSize: 20,
     textAlign: 'center',
-    fontWeight: 'bold',
     margin: 10,
   },
   instructions: {

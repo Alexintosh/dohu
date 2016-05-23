@@ -10,7 +10,6 @@ import {
   Text,
   View,
   Image,
-  Animated,  
   Dimensions,
   TouchableHighlight
 } from 'react-native';
@@ -18,22 +17,11 @@ import {
 var W = Dimensions.get('window').width; //full width
 var H = Dimensions.get('window').height; //full height
 class Score extends Component {
-  constructor(props){
-    super(props);
-    this._animatedValue = new Animated.Value(0);    
-  }
-
-  componentDidMount() {
-    Animated.timing(this._animatedValue, {
-        toValue: 30,
-        duration: 100
-    }).start();
-  }
   
   render() {
     return (
          <View style={styles.container}>
-            <Animated.Text style={[styles.label, {fontSize: this._animatedValue}]} >{this.props.score}</Animated.Text>
+            <Text style={styles.label}>{this.props.score}</Text>
          </View>
     );
   }
