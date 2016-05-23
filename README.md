@@ -2,6 +2,7 @@
 React Native English Trainer App
 
 ![](https://thumbs.gfycat.com/MediocreEmptyCrownofthornsstarfish-size_restricted.gif)
+![](https://thumbs.gfycat.com/BewitchedBackBilby-size_restricted.gif)
 
 # Getting started
 
